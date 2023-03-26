@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
 
@@ -39,11 +38,9 @@ class UserRegisterForm(forms.ModelForm):
 
 class UserChangeForm(forms.ModelForm):
     """Изменение данных юзера"""
-    password = ReadOnlyPasswordHashField()
-
     class Meta:
         model = CustomUser
-        fields = ('name', 'email', 'telegram', 'phone_number', 'notification', 'password')
+        fields = ('name', 'email', 'telegram', 'phone_number', 'notification')
 
     def clean_password(self):
         return self.initial["password"]

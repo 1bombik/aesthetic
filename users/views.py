@@ -1,6 +1,7 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, UserChangeForm
+from .models import UserProfile, CustomUser
 
 
 def user_register(request):
@@ -37,6 +38,14 @@ def user_login(request):
     return render(request, 'users/login.html', context)
 
 
-def user_logout(request):
-    logout(request)
-    return redirect('login')
+def user_profile(request, pk):
+    user = CustomUser.objects.get(pk=pk)
+    profile = UserProfile.objects.get(user=pk)
+    if request.method == 'POST':
+        form = UserChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserChangeForm(instance=user)
+    context = {'user': user, 'profile': profile, 'form': form}
+    return render(request, 'users/user_account.html', context)

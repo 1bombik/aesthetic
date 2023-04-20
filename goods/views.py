@@ -6,3 +6,4 @@ def all_products(request):
     products = Product.objects.all()
     context = {'products': products}
     return render(request, 'goods/products.html', context)
+

@@ -1,28 +1,7 @@
-body {
-  font-family: 'Ablation', sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.container {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.list-group {
-  border: 1px solid #000;
-}
-
-.list-group-item {
-  border: 1px solid #000;
-}
-
-a {
+body.white-theme {
+  background-color: #fff;
   color: #000;
 }
-
-a:hover {
-  text-decoration: none;
-  color: #fff;
-  background-color: #000;
+body.white-theme a {
+  color: #007bff;
 }

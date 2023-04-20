@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.contrib.auth import authenticate, login
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserLoginForm, UserChangeForm
 from .models import UserProfile, CustomUser
@@ -13,6 +15,13 @@ def user_register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
             login(request, user)
+
+            subject = 'Регистрация прошла успешно!'
+            message = f'Спасибо за регистрацию! Желаем приятных покупок!'
+            from_email = settings.DEFAULT_FROM_EMAIL
+            recipient_list = [email]
+            send_mail(subject, message, from_email, recipient_list, fail_silently=True)
+
             return redirect('home')
     else:
         form = UserRegisterForm()

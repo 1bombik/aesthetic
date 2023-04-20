@@ -7,9 +7,10 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('users/', include('users.urls')),
-    path('goods/', include('goods.urls'))
+    path('goods/', include('goods.urls')),
+    path('orders/', include('orders.urls')),
+    path('', TemplateView.as_view(template_name='home.html'), name='home')
 ]
 
 if settings.DEBUG:

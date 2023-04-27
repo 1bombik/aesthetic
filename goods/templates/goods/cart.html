@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if items %}
+        <h1>Your Cart</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.product.title }}</td>
+                        <td>${{ item.product.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>Итого:</td>
+                    <td>${{ total_price }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <form action="{% url 'checkout' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Сделать заказ">
+        </form>
+        <form action="{% url 'clear_cart' %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Очистить корзину">
+        </form>
+    {% else %}
+        <p>В корзине ничего нет.</p>
+    {% endif %}
+{% endblock %}

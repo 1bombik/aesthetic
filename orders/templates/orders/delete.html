@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Delete Order</h1>
+<h1>Удалить заказ</h1>
 
-<p>Are you sure you want to delete the order for {{ order.product }}?</p>
+<p>Вы уверены, что хотите удалить {{ order.product }}?</p>
 
 <form action="{% url 'orders:delete' order.id %}" method="POST">
   {% csrf_token %}
-  <button type="submit">Yes, delete it</button>
+  <button type="submit">Да, удалить</button>
 </form>
 
-<a href="{% url 'orders:list' %}">Cancel</a>
+<a href="{% url 'orders:list' %}">Отмена</a>
 
 {% endblock %}

@@ -9,6 +9,11 @@
                 {% if product.image %}
                     <img src="{{ product.image.url }}" alt="{{ product.title }}">
                 {% endif %}
+                <form method="post" action="{% url 'add-to-cart' product_id=product.id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit">Добавить в корзину</button>
+                </form>
             </li>
         {% empty %}
             <li>К сожалению, сейчас ничего нет</li>

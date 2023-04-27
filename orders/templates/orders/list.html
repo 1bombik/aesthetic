@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>My Orders</h1>
+<h1>Мои заказы</h1>
 
 {% if orders %}
   <table>
     <thead>
       <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Created At</th>
+        <th>Товар</th>
+        <th>Количество</th>
         <th></th>
       </tr>
     </thead>
@@ -22,7 +21,7 @@
           <td>
             <form action="{% url 'orders:delete' order.id %}" method="POST">
               {% csrf_token %}
-              <button type="submit">Delete</button>
+              <button type="submit">Удалить</button>
             </form>
           </td>
         </tr>
@@ -30,8 +29,6 @@
     </tbody>
   </table>
 {% else %}
-  <p>You haven't placed any orders yet.</p>
+  <p>У вас пока нет заказов</p>
 {% endif %}
-
-<a href="{% url 'orders:create' %}">Place an Order</a>
 {% endblock %}

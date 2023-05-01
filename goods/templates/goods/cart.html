@@ -12,17 +12,29 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in items %}
+                <form method="POST" action="{% url 'update_cart' %}">
+                    {% csrf_token %}
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.product.title }}</td>
+                            <td>${{ item.product.price }}</td>
+                            <td>
+                                <label>
+                                    <input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}" min="0">
+                                </label>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     <tr>
-                        <td>{{ item.product.title }}</td>
-                        <td>${{ item.product.price }}</td>
-                        <td>{{ item.quantity }}</td>
+                        <td>Итого:</td>
+                        <td>${{ total_price }}</td>
                     </tr>
-                {% endfor %}
-                <tr>
-                    <td>Итого:</td>
-                    <td>${{ total_price }}</td>
-                </tr>
+                    <tr>
+                        <td colspan="3">
+                            <input type="submit" value="Обновить корзину">
+                        </td>
+                    </tr>
+                </form>
             </tbody>
         </table>
         <form action="{% url 'checkout' %}" method="post">

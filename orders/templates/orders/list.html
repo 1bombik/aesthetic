@@ -18,12 +18,6 @@
           <td>{{ order.product }}</td>
           <td>{{ order.quantity }}</td>
           <td>{{ order.created_at }}</td>
-          <td>
-            <form action="{% url 'orders:delete' order.id %}" method="POST">
-              {% csrf_token %}
-              <button type="submit">Удалить</button>
-            </form>
-          </td>
         </tr>
       {% endfor %}
     </tbody>

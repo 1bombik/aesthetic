@@ -1,25 +1,26 @@
 version: '3'
 
 services:
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    environment:
-      - DJANGO_SETTINGS_MODULE=aesthetic.settings
-    volumes:
-      - .:/app
-  db:
-    image: postgres
-    environment:
-      - POSTGRES_DB=mydatabase
-      - POSTGRES_USER=mydatabaseuser
-      - POSTGRES_PASSWORD=mypassword
-    volumes:
-      - pgdata:/var/lib/postgresql/data/
+    web:
+      build: .
+      command: python manage.py runserver 0.0.0.0:8000
+      ports:
+        - 8000:8000
+#      depends_on:
+#        - db
+      environment:
+        - DJANGO_SETTINGS_MODULE=aesthetic.settings
 
-volumes:
-  pgdata:
+
+#    db:
+#      restart: always
+#      image: postgres:latest
+#      container_name: db_postgres
+#      environment:
+#        - POSTGRES_DB=admin
+#        - POSTGRES_USER=admin
+#        - POSTGRES_PASSWORD=mypassword1234
+#      volumes:
+#        - ./data/postgres:/var/lib/postgresql/data
+#      ports:
+#        - "5432:5432"

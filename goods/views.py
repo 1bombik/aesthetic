@@ -4,6 +4,9 @@ from django.core.mail import send_mail
 from django.db import transaction
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.views.decorators.cache import never_cache
+
 from .models import Product, Cart, CartItem, Order, OrderItem
 
 
@@ -109,3 +112,19 @@ def add_to_cart(request, product_id):
         cart_item.quantity += 1
         cart_item.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def update_cart(request):
+    cart = Cart.objects.get(user=request.user)
+    cart_items = cart.cartitem_set.all()
+    if request.method == 'POST':
+        for item in cart_items:
+            quantity = request.POST.get(f"quantity_{item.id}")
+            if quantity is None:
+                quantity = 0
+            item.quantity = int(quantity)
+            item.save()
+        cart.save()
+        return redirect('cart')
+    else:
+        return render(request, 'goods/cart.html', {'items': cart.items.all(), 'total_price': cart.total_price})
